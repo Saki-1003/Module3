@@ -106,6 +106,16 @@
 //   console.log('printing debounced message') 
 // } 
 
+//for this to debounce the calls, you'd still need the clearTimeout part like this:
+/*
+function debounce(fnc, ms) {
+  let timeout;
+  return function() {
+    clearTimeout(timeout)
+    timeout = setTimeout(fnc, ms)
+  }
+}
+*/
 // function debounce(fnc, ms) {
 //   return function() {
 //     const delayFnc = setTimeout(fnc, ms)
@@ -119,7 +129,10 @@
 //   console.log(msg) 
 // } 
 
+//Same as above, this function would also need clearTimeout to have debounce functionality
 // function debounce(fnc, ms) {
+      //Since on the line below, you are using the arguments object to get the arguments provided to the
+      //function, you do not need the msg parameter for the returned function below
 //   return function(msg) {
 //     const delayFnc = setTimeout(()=>fnc.apply(this, arguments), ms)
 //   }
@@ -193,6 +206,9 @@
 // setTimeout(function() {car.description()}, 200); 
 
 // b)
+//When the exercise said "creating a clone of the original and overriding it", it was meaning to
+//set the car variable to the new clone like this:
+//car = {...car, year: 1950}
 // let carClone = {...car, year: '1950'}
 // console.log(carClone)
 
@@ -203,8 +219,17 @@
 // setTimeout(car.description.bind(car), 200); 
 
 // e)
+//Same as above, the exercise was meaning for this line to be:
+//car = {...car, make: 'BMW}
 // let carClone2 = {...car, make: 'BMW'}
 // --> yes, it still uses the bound value from d)
+
+//We are modifying the original car variable with a clone of the object so then the reference to the
+//object changes. With the setTimeout function, the car object is read when the function inside is called.
+//This means that after the delay, the car will have the year 1950 and make BMW.
+//When binding the car, it gets bound to the car object. When the car variable gets changed to the clone
+//with make being BMW, the bound function is still bound to the old object, while the car variable
+//is now pointing to a new object.
 
 
 // 6
