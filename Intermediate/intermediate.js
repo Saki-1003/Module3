@@ -1,8 +1,17 @@
 //1
 
+//This function logs each capitalized word, but we're expecting to get a string with the capitalized letters. This can be done like this:
+/*
+function ucFirstLetters(txt) {
+  const splitWords = txt.split(' ')
+  const uppercasedArray = splitWords.map(word => word[0].toUpperCase() + word.slice(1))
+  return uppercasedArray.join(' ')
+}
+*/
 function ucFirstLetters(txt) {
   let txtArry = txt.split(' ')
   txtArry.forEach(function(el, i) {
+    //This does correctly uppercase the first letter in the string, but since the "el" parameter in this case is the item in the array, the "txtArray[i]" parts can be replaced with el
   let result = txtArry[i].substring(0,1).toUpperCase()+txtArry[i].substring(1)
   console.log(result)
   })
@@ -49,12 +58,28 @@ console.log(animals)
 
 /*d)*/
 function replaceMiddleAnimal(newAnimal) {
+  //This would replace the item at index 2 (item 3), so this would only be the middle for arrays with 5 items.
+  //To replace the middle value for any array, we'd need to calculate the middle index which would be:
+  //const index = Math.floor(animals.length / 2)
+  //Then your splice function would be as follows:
+  //animals.splice(index, 1, newAnimal)
    animals.splice(2, 1, newAnimal)
    return animals
 }
 console.log(replaceMiddleAnimal('Leopard'))
 
 /*e)*/
+//This function works as it returns a string with the items that have their first letter match beginWith
+//However this function would only work if beginWith is a single letter.
+//We also want this function to return an array of the items that start with beginWith
+//We can modify the findMatchingAnimals function to do that like this:
+/*
+function findMatchingAnimals(beginWith) {
+  //Make both the animal and beginWith lowercase so then this function will be case insensitive
+  //We return a filtered array of animals that start with beginWith
+  return animals.filter(animal => animal.toLowerCase().startsWith(beginWith.toLowerCase()))
+}
+*/
 function findMatchingAnimals(beginWith) {
   
   let animalList ="";
@@ -289,8 +314,25 @@ getTitles('H')
 // }
 // latestBook()
 
+//This will be finding the book with the year 1960. In our books array, the latest one is from 1960.
+//But if we had thousands of books in the array, it's possible for a book to have been made after 1960.
+//This means we want to search through the books array and find the book with the latest year instead
+//of hardcoding it. We can do that by doing something like this:
+/*
 function latestBook() {
+  let latestYear = 0;
+  books.forEach(book => {
+    if (book.year > latestYear) {
+      //If the book's year is greater than the latestYear we have stored, set latestYear to the book year
+      latestYear = book.year
+    }
+  })
 
+  //Find and return the book with the latest year
+  return books.find(book => book.year === latestYear)
+}
+*/
+function latestBook() {
   let newestBook = books.find(book => book.year == 1960)
   console.log(newestBook)
 }
@@ -317,6 +359,15 @@ phoneBookABC.set('Caroline','0135823254')
 console.log(phoneBookABC)
 
 // d)
+//There isn't a startsWith method for Maps so this will crash the program. We can log the keys and values
+//of the map like this:
+/*
+function printPhoneBook(contacts) {
+  for (const [key, value] of contacts.entries()) {
+    console.log(`${key}'s phone number is: ${value}`)
+  }
+}
+*/
 function printPhoneBook(contacts) {
  if(contacts.startsWith('A' ||' B' || 'C')) {
   phoneBookABC.set(contacts)
@@ -359,7 +410,23 @@ function sumSalaries(salaries) {
 sumSalaries(salaries)
 
 // b)
+//This topEarner function here works as expected and provides the correct result, but here is a way
+//to do the same thing that I feel is simpler to do:
+/*
+function topEarner(salaries) {
+  let highestEarner = ''
+  let topSalary = 0;
 
+  for (const [name, salary] of Object.entries(salaries)) {
+    if (salary > topSalary) {
+      highestEarner = name;
+      topSalary = salary;
+    }
+  }
+
+  return highestEarner
+}
+*/
 function topEarner(salaries) {
   let salAcc = ""
   
@@ -397,6 +464,29 @@ let seconds = minutes * 60 + today.getSeconds()
 console.log(seconds + ' seconds have passed so far today')
 
 // c)
+//This part is very close. You have the adjustment for months so if it's less than 0, it'll take away 1
+//from the years and add 12 to the months. You'd also need that adjustment for days as well. Otherwise
+//the days can be negative as well. You can adjust it to be something like this:
+/*
+let myAge = new Date('1985-10-03')
+let now = new Date('2024-5-16')
+
+let years = now.getFullYear() - myAge.getFullYear()
+let months = now.getMonth() - myAge.getMonth()
+let days = now.getDate() - myAge.getDate()
+
+if (days < 0) {
+    months -= 1
+    days += 30
+}
+
+if (months < 0) {
+    years -= 1
+    months += 12
+}
+
+console.log(`I am ${years} years, ${months} months and ${days} days old`)
+*/
 let myAge = new Date('1985-10-03')
 let now = new Date('2024-5-16')
 
@@ -420,6 +510,9 @@ function daysInBetween(date1, date2) {
   let endDate = new Date(date2)
 
   let diffMilsec = endDate - startDate
+  //This is correct, but if date1 is after date2, the date can be negative. To make it always
+  //be positive, you can use Math.abs to make it be positive like this:
+  //let diffDays = Math.abs(Math.floor(diffMilsec/1000/60/60/24))
   let diffDays = Math.floor(diffMilsec/1000/60/60/24)
   console.log(diffDays)
 }

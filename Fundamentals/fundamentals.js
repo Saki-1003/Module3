@@ -33,6 +33,7 @@ let division = three / four   // 0.75
 let subtraction = three - four    // -1
 
 let lessThan1 = three < four  // true
+//To stop this from being true, we can convert thirty and four to numbers before doing the less than comparison
 let lessThan2 = thirty < four  // true
 
 //3. Which of the following console.log messages will print? Why?
